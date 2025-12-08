@@ -2,7 +2,7 @@ import sys, re
 from collections import defaultdict
 
 def split_resi(s: str):
-    # Allow optional leading '-' for negative residue numbers
+
     m = re.fullmatch(r"(-?\d+)([A-Za-z]?)", s)
     if not m:
         sys.exit("RESI must look like -1, 0, 123 or 123A")
@@ -16,21 +16,21 @@ with open(pdb) as fh:
     for ln in fh:
         if not (ln.startswith("ATOM  ") or ln.startswith("HETATM")):
             continue
-        if ln[21] != chain:                          # chain ID
+        if ln[21] != chain:                      
             continue
         try:
-            seq = int(ln[22:26])                     # resSeq (can be negative)
+            seq = int(ln[22:26])                   
         except ValueError:
             continue
-        ic = ln[26]                                  # insertion code
+        ic = ln[26]                                
 
         if seq != resn or (icode != " " and ic != icode):
             continue
 
         resname = ln[17:20].strip()
         atom    = ln[12:16].strip()
-        alt     = (ln[16].strip() or ".")           # altLoc
-        occ     = float(ln[54:60])                  # occupancy
+        alt     = (ln[16].strip() or ".")         
+        occ     = float(ln[54:60])                 
         rows.append((resname, f"{seq}{'' if ic==' ' else ic}", atom, alt, occ))
         by_alt[alt].append(occ)
 
