@@ -24,4 +24,3 @@ x = cmd.get_dihedral(a,b,c,d)
 x += 180
 cmd.set_dihedral(a,b,c,d,x)
 cmd.save(pdb_name + '_flipped.pdb', pdb_name)
-	## add command to move flipped pdb into the flipped directory
