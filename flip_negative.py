@@ -21,11 +21,9 @@ b = f"{pdb_name}//{chain}/`\{nt}/C1'"
 c = f"{pdb_name}//{chain}/`\{nt}/N9"
 d = f"{pdb_name}//{chain}/`\{nt}/C4"
 
-# Get and adjust the dihedral angle
 x = cmd.get_dihedral(a, b, c, d)
 print(x)
 x += 180
 cmd.set_dihedral(a, b, c, d, x)
 
 cmd.save(pdb_name + '_flipped.pdb', pdb_name)
-	## add command to move flipped pdb into the flipped directory
