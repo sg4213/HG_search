@@ -544,7 +544,10 @@ else
     phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
 fi
 
-phenix.mtz2map ${pdb_id}_final_flipped_protonated_refine_001_refine_001.mtz ${pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb
+mv ${pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb ${pdb_id}_final_flipped_refine_001_refine_001.pdb
+mv ${pdb_id}_final_flipped_protonated_refine_001_refine_001.mtz ${pdb_id}_final_flipped_refine_001_refine_001.mtz
+
+phenix.mtz2map ${pdb_id}_final_flipped_refine_001_refine_001.mtz ${pdb_id}_final_flipped_refine_001_refine_001.pdb
 
 ########################################
   # Make figure
@@ -564,9 +567,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
@@ -647,9 +650,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
@@ -729,9 +732,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
