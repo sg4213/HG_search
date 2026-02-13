@@ -39,7 +39,7 @@ while IFS=, read -r pdb_code assembly reso chi_1 chi_2 chain_1 nt_type_1 nt_numb
   pair="${nt_type_1}${nt_type_2}"
   script=""
   case "${pair}" in
-    AT|TA|TG|GT|AC|CA|AU|UA|GU|UG|GC|CG)
+    AT|TA|TG|GT|AC|CA|AU|UA|GU|UG)
       script="./read_PDB_MTZ_NT_AT_GT_AC.sh"
       ;;
     GC|CG)
