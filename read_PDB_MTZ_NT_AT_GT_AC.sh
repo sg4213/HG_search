@@ -598,11 +598,11 @@ FILE=${pdb_id}_final_flipped.ligands.cif
 if [ -f "$FILE" ]
 then
   echo ${pdb_id}_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-  phenix.refine ${pdb_id}_final_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")" miller_array.labels.name=F-obs
+  phenix.refine ${pdb_id}_final_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))" and not resname HOH)" miller_array.labels.name=F-obs
 
 else
   echo ${pdb_id}_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-  phenix.refine ${pdb_id}_final_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")" miller_array.labels.name=F-obs
+  phenix.refine ${pdb_id}_final_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))" and not resname HOH)" miller_array.labels.name=F-obs
 fi
 
 FILE=${pdb_id}_final_flipped.ligands.cif
