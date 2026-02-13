@@ -517,69 +517,32 @@ else
     python3 flip.py ${pdb_id}_final $chain_delete $nt_delete
 fi
 
-if [ "$2" == "C" ]
-then
-  echo "G-C pair"
-  chain_protonate=$chain_1
-  nt_protonate=$nt_number_1
+phenix.ready_set ${pdb_id}_final_flipped.pdb
+FILE=${pdb_id}_final_flipped.ligands.cif
 
-  phenix.ready_set ${pdb_id}_final_flipped.pdb
-  FILE=${pdb_id}_final_flipped.ligands.cif
-  python3 ../../../protonate.py ${pdb_id}_final_flipped $chain_protonate $nt_protonate
-  if [ -f "$FILE" ]
-  then
+chain_protonate=${chain_delete}
+nt_protonate=${nt_delete}
+python3 ../../../protonate.py ${pdb_id}_final_flipped ${chain_protonate} ${nt_protonate}
+  
+if [ -f "$FILE" ]
+then
     echo ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
     phenix.refine ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
 
-  else
+else
     echo ${pdb_id}_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
     phenix.refine ${pdb_id}_final_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
-  fi
+fi
 
-  FILE=${pdb_id}_flipped.ligands.cif
-  if [ -f "$FILE" ]
-  then
+if [ -f "$FILE" ]
+then
     echo ${pdb_id}_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
     phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
-    echo "Refinment in WC" >> Rfactor_report.txt
 
-  else
+else
     echo ${pdb_id}_flipped_protonated_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
     phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
-    echo "Refinment without nt" >> Rfactor_report.txt
-  fi
-
-elif  [ "$2" == "G" ]
-  then
-    echo "G-C pair"
-    chain_protonate=$chain_2
-    nt_protonate=$nt_number_2
-
-    phenix.ready_set ${pdb_id}_final_flipped.pdb
-    FILE=${pdb_id}_final_flipped.ligands.cif
-    python3 ../../../protonate.py ${pdb_id}_final_flipped $chain_protonate $nt_protonate
-    if [ -f "$FILE" ]
-    then
-      echo ${pdb_id}_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
-
-    else
-      echo ${pdb_id}_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
-    fi
-
-    FILE=${pdb_id}_final_flipped.ligands.cif
-    if [ -f "$FILE" ]
-    then
-      echo ${pdb_id}_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
-      echo "Refinment in WC" >> Rfactor_report.txt
-
-    else
-      echo ${pdb_id}_flipped_protonated_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
-      echo "Refinment without nt" >> Rfactor_report.txt
-    fi
+fi
 
 phenix.mtz2map ${pdb_id}_final_flipped_protonated_refine_001_refine_001.mtz ${pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb
 
