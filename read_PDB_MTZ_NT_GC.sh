@@ -517,7 +517,6 @@ else
     python3 flip.py ${pdb_id}_final $chain_delete $nt_delete
 fi
 
-
 if [ "$2" == "C" ]
 then
   echo "G-C pair"
@@ -526,27 +525,27 @@ then
 
   phenix.ready_set ${pdb_id}_final_flipped.pdb
   FILE=${pdb_id}_final_flipped.ligands.cif
-  python3 protonate.py ${pdb_id}_final $chain_protonate $nt_protonate
+  python3 ../../../protonate.py ${pdb_id}_final_flipped $chain_protonate $nt_protonate
   if [ -f "$FILE" ]
   then
-    echo ${pdb_id}_final\_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-    phenix.refine ${pdb_id}_final_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
+    echo ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
+    phenix.refine ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
 
   else
-    echo ${pdb_id}_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-    phenix.refine ${pdb_id}_final_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
+    echo ${pdb_id}_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
+    phenix.refine ${pdb_id}_final_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
   fi
 
   FILE=${pdb_id}_flipped.ligands.cif
   if [ -f "$FILE" ]
   then
-    echo ${pdb_id}_flipped_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
-    phenix.refine ${pdb_id}_final_flipped_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
+    echo ${pdb_id}_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
+    phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
     echo "Refinment in WC" >> Rfactor_report.txt
 
   else
-    echo ${pdb_id}_flipped_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
-    phenix.refine ${pdb_id}_final_flipped_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
+    echo ${pdb_id}_flipped_protonated_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
+    phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
     echo "Refinment without nt" >> Rfactor_report.txt
   fi
 
@@ -558,31 +557,31 @@ elif  [ "$2" == "G" ]
 
     phenix.ready_set ${pdb_id}_final_flipped.pdb
     FILE=${pdb_id}_final_flipped.ligands.cif
-    python3 protonate.py ${pdb_id}_final $chain_protonate $nt_protonate
+    python3 ../../../protonate.py ${pdb_id}_final_flipped $chain_protonate $nt_protonate
     if [ -f "$FILE" ]
     then
-      echo ${pdb_id}_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
+      echo ${pdb_id}_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
+      phenix.refine ${pdb_id}_final_flipped_protonated.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
 
     else
-      echo ${pdb_id}_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
+      echo ${pdb_id}_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")">> phenix.refine.txt
+      phenix.refine ${pdb_id}_final_flipped_protonated.pdb *.mtz refine.sites.individual="(chain $chain_delete and resseq "$(($nt_delete-2))":"$(($nt_delete+2))")"
     fi
 
     FILE=${pdb_id}_final_flipped.ligands.cif
     if [ -f "$FILE" ]
     then
-      echo ${pdb_id}_flipped_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
+      echo ${pdb_id}_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_flipped.ligands.cif >> phenix.refine.txt
+      phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit.updated_refine_001.mtz ${pdb_id}_final_flipped.ligands.cif strategy=individual_sites+individual_adp+occupancies
       echo "Refinment in WC" >> Rfactor_report.txt
 
     else
-      echo ${pdb_id}_flipped_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
-      phenix.refine ${pdb_id}_final_flipped_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
+      echo ${pdb_id}_flipped_protonated_refine_001.pdb omit_refine_001.mtz >> phenix.refine.txt
+      phenix.refine ${pdb_id}_final_flipped_protonated_refine_001.pdb omit_refine_001.mtz strategy=individual_sites+individual_adp+occupancies
       echo "Refinment without nt" >> Rfactor_report.txt
     fi
 
-phenix.mtz2map ${pdb_id}_final_flipped_refine_001_refine_001.mtz ${pdb_id}_final_flipped_refine_001_refine_001.pdb
+phenix.mtz2map ${pdb_id}_final_flipped_protonated_refine_001_refine_001.mtz ${pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb
 
 ########################################
   # Make figure
@@ -602,9 +601,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
@@ -685,9 +684,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
@@ -767,9 +766,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
@@ -849,9 +848,9 @@ chain_2 = \"${chain_2}\"
 nt_number_2 = \"${nt_number_2}\"
 pdb_id = \"${pdb_id}\"
 
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001.pdb\", \"pdb\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
-cmd.load(f\"{pdb_id}_final_flipped_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001.pdb\", \"pdb\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_2mFo-DFc.ccp4\", \"map\")
+cmd.load(f\"{pdb_id}_final_flipped_protonated_refine_001_refine_001_mFo-DFc.ccp4\", \"diffmap\")
 
 #cmd.remove(\"solvent\")
 cmd.select(\"solvent\")   
